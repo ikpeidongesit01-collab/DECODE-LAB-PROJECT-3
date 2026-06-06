@@ -1,0 +1,270 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+/* ── CSS Variables (Light / Dark theme) ──────────────────────── */
+:root {
+    --bg:        #f5fdfd;
+    --surface:   #f3f7f6;
+    --surface2:  #f0ece6;
+    --border:    #d4e7e6;
+    --text:      #1a1208;
+    --text-muted:#534949;
+    --accent:    #c0392b;
+    --accent2:   #468dc7;
+    --green:     #28794b;
+    --amber:     #f1efeb;
+    --shadow:    rgba(26,18,8,.10);
+    --transition: 0.35s cubic-bezier(.4,0,.2,1);
+  }
+  [data-theme="dark"] {        
+    --bg:#222832;
+    --surface:   #222832;
+    --surface2:  #222832;
+    --border:    #222832;
+    --text:      #f8f6f3;
+    --text-muted:#9c8f7e;
+    --accent:    #4bc19d;
+    --accent2:   #a0cff2;
+    --green:     #4ead76;
+    --amber:     #f1efec;
+    --shadow:    rgba(64, 83, 109, 0.4);
+  }
+
+  /* ── Base ─────────────────────────────────────────────────────── */
+  * { transition: background-color var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition); }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  .font-display { font-family: 'Syne', sans-serif; }
+  .font-mono    { font-family: 'DM Mono', monospace; }
+
+  /* ── Surfaces ─────────────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 24px var(--shadow);
+  }
+  .card-inner {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: .875rem;
+  }
+
+  /* ── Fluid type ───────────────────────────────────────────────── */
+  .hero-title   { font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.05; }
+  .section-title{ font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.2; }
+
+  /* ── Dark mode toggle button ──────────────────────────────────── */
+  #js-theme-toggle {
+    position: relative;
+    width: 52px; height: 28px;
+    background: var(--border);
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  #js-theme-toggle .knob {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--text);
+    transition: transform .3s cubic-bezier(.4,0,.2,1), background .3s;
+  }
+  [data-theme="dark"] #js-theme-toggle .knob { transform: translateX(24px); background: var(--amber); }
+  [data-theme="dark"] #js-theme-toggle { background: var(--border); }
+
+  /* ── Hamburger → X animation ──────────────────────────────────── */
+  .ham-line {
+    display: block;
+    width: 22px; height: 2.5px;
+    background: var(--text);
+    border-radius: 99px;
+    transition: transform .3s ease, opacity .3s ease;
+    transform-origin: center;
+  }
+  .is-open .ham-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .is-open .ham-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .is-open .ham-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── Mobile nav drawer ────────────────────────────────────────── */
+  #mobile-drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(72vw, 300px);
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.16,1,.3,1);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  #mobile-drawer.is-open  { transform: translateX(0); }
+  #drawer-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(3px);
+    z-index: 199;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #drawer-backdrop.is-open { opacity: 1; pointer-events: all; }
+
+  /* ── Tab system ───────────────────────────────────────────────── */
+  .tab-btn {
+    padding: .5rem 1.25rem;
+    border-radius: .625rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all .2s ease;
+    white-space: nowrap;
+  }
+  .tab-btn.is-active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.is-active { display: block; animation: fadeUp .35s ease; }
+
+  /* ── Counter ──────────────────────────────────────────────────── */
+  #js-count-display {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    transition: transform .15s ease, color .3s;
+  }
+  #js-count-display.is-bump { transform: scale(1.18); }
+
+  /* ── Quiz styles ──────────────────────────────────────────────── */
+  .quiz-option {
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: .75rem;
+    padding: .875rem 1.25rem;
+    cursor: pointer;
+    font-size: .95rem;
+    color: var(--text);
+    text-align: left;
+    transition: border-color .2s, background .2s, transform .15s;
+  }
+  .quiz-option:hover:not(:disabled) { border-color: var(--accent2); transform: translateX(4px); }
+  .quiz-option.is-correct  { border-color: var(--green); background: color-mix(in srgb, var(--green) 12%, transparent); color: var(--green); }
+  .quiz-option.is-wrong    { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); }
+  .quiz-option:disabled    { cursor: not-allowed; opacity: .75; }
+
+  /* ── Todo styles ──────────────────────────────────────────────── */
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    animation: fadeUp .3s ease;
+    transition: opacity .3s, transform .3s;
+  }
+  .todo-item.is-done .todo-text { text-decoration: line-through; opacity: .5; }
+  .todo-checkbox {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, border-color .2s;
+  }
+  .todo-item.is-done .todo-checkbox { background: var(--green); border-color: var(--green); }
+  .todo-delete {
+    margin-left: auto;
+    width: 28px; height: 28px;
+    border-radius: .4rem;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s;
+  }
+  .todo-delete:hover { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+
+  /* ── Accordion ────────────────────────────────────────────────── */
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s cubic-bezier(.4,0,.2,1);
+  }
+  .accordion-item.is-open .accordion-body { max-height: 200px; }
+  .accordion-icon {
+    transition: transform .3s ease;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    font-weight: 300;
+  }
+  .accordion-item.is-open .accordion-icon { transform: rotate(45deg); color: var(--accent); }
+
+  /* ── Image gallery ────────────────────────────────────────────── */
+  .gallery-thumb {
+    aspect-ratio: 1;
+    border-radius: .75rem;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color .2s, transform .2s;
+  }
+  .gallery-thumb:hover, .gallery-thumb.is-active { border-color: var(--accent); transform: scale(1.04); }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  #gallery-main {
+    border-radius: 1rem;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: var(--surface2);
+    transition: opacity .25s ease;
+  }
+  #gallery-main.is-fading { opacity: 0; }
+  #gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ── IPO badge ────────────────────────────────────────────────── */
+  .ipo-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    font-weight: 500;
+    padding: .2rem .6rem;
+    border-radius: 99px;
+    letter-spacing: .05em;
+  }
+  .ipo-input   { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+  .ipo-process { background: color-mix(in srgb, var(--accent2) 15%, transparent); color: var(--accent2); }
+  .ipo-output  { background: color-mix(in srgb, var(--green) 15%, transparent); color: var(--green); }
+
+  /* ── Scroll reveal ────────────────────────────────────────────── */
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* ── Keyframes ────────────────────────────────────────────────── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes spin    { to{transform:rotate(360deg)} }
+
+  /* ── Scrollbar ────────────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }

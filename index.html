@@ -2,8 +2,9 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project 3 – Interactive Web Elements</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Project 3 - Interactive Web Elements</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -25,275 +26,6 @@
       },
     }
   </script>
-
-  <style>
-    /* ── CSS Variables (Light / Dark theme) ──────────────────────── */
-    :root {
-      --bg:        #f5f2ee;
-      --surface:   #ffffff;
-      --surface2:  #f0ece6;
-      --border:    #e2d9ce;
-      --text:      #1a1208;
-      --text-muted:#6b5e4e;
-      --accent:    #c0392b;
-      --accent2:   #2c5f8a;
-      --green:     #2d7a4f;
-      --amber:     #c07a1a;
-      --shadow:    rgba(26,18,8,.10);
-      --transition: 0.35s cubic-bezier(.4,0,.2,1);
-    }
-    [data-theme="dark"] {
-      --bg:        #0f0d0a;
-      --surface:   #1c1915;
-      --surface2:  #252118;
-      --border:    #332e24;
-      --text:      #f0ebe2;
-      --text-muted:#9c8f7e;
-      --accent:    #e05544;
-      --accent2:   #5b9fd4;
-      --green:     #4ead76;
-      --amber:     #e09a35;
-      --shadow:    rgba(0,0,0,.4);
-    }
-
-    /* ── Base ─────────────────────────────────────────────────────── */
-    * { transition: background-color var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition); }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-    .font-display { font-family: 'Syne', sans-serif; }
-    .font-mono    { font-family: 'DM Mono', monospace; }
-
-    /* ── Surfaces ─────────────────────────────────────────────────── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 1.25rem;
-      box-shadow: 0 4px 24px var(--shadow);
-    }
-    .card-inner {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: .875rem;
-    }
-
-    /* ── Fluid type ───────────────────────────────────────────────── */
-    .hero-title   { font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.05; }
-    .section-title{ font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.2; }
-
-    /* ── Dark mode toggle button ──────────────────────────────────── */
-    #js-theme-toggle {
-      position: relative;
-      width: 52px; height: 28px;
-      background: var(--border);
-      border-radius: 99px;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      flex-shrink: 0;
-    }
-    #js-theme-toggle .knob {
-      position: absolute;
-      top: 3px; left: 3px;
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: var(--text);
-      transition: transform .3s cubic-bezier(.4,0,.2,1), background .3s;
-    }
-    [data-theme="dark"] #js-theme-toggle .knob { transform: translateX(24px); background: var(--amber); }
-    [data-theme="dark"] #js-theme-toggle { background: var(--border); }
-
-    /* ── Hamburger → X animation ──────────────────────────────────── */
-    .ham-line {
-      display: block;
-      width: 22px; height: 2.5px;
-      background: var(--text);
-      border-radius: 99px;
-      transition: transform .3s ease, opacity .3s ease;
-      transform-origin: center;
-    }
-    .is-open .ham-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .is-open .ham-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .is-open .ham-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* ── Mobile nav drawer ────────────────────────────────────────── */
-    #mobile-drawer {
-      position: fixed;
-      inset: 0 0 0 auto;
-      width: min(72vw, 300px);
-      background: var(--surface);
-      border-left: 1px solid var(--border);
-      padding: 2rem 1.5rem;
-      z-index: 200;
-      transform: translateX(100%);
-      transition: transform .35s cubic-bezier(.16,1,.3,1);
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-    }
-    #mobile-drawer.is-open  { transform: translateX(0); }
-    #drawer-backdrop {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.45);
-      backdrop-filter: blur(3px);
-      z-index: 199;
-      opacity: 0; pointer-events: none;
-      transition: opacity .3s ease;
-    }
-    #drawer-backdrop.is-open { opacity: 1; pointer-events: all; }
-
-    /* ── Tab system ───────────────────────────────────────────────── */
-    .tab-btn {
-      padding: .5rem 1.25rem;
-      border-radius: .625rem;
-      font-family: 'DM Mono', monospace;
-      font-size: .8rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: transparent;
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: all .2s ease;
-      white-space: nowrap;
-    }
-    .tab-btn.is-active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-    .tab-panel { display: none; }
-    .tab-panel.is-active { display: block; animation: fadeUp .35s ease; }
-
-    /* ── Counter ──────────────────────────────────────────────────── */
-    #js-count-display {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3rem, 10vw, 6rem);
-      font-weight: 800;
-      color: var(--accent);
-      line-height: 1;
-      transition: transform .15s ease, color .3s;
-    }
-    #js-count-display.is-bump { transform: scale(1.18); }
-
-    /* ── Quiz styles ──────────────────────────────────────────────── */
-    .quiz-option {
-      background: var(--surface2);
-      border: 2px solid var(--border);
-      border-radius: .75rem;
-      padding: .875rem 1.25rem;
-      cursor: pointer;
-      font-size: .95rem;
-      color: var(--text);
-      text-align: left;
-      transition: border-color .2s, background .2s, transform .15s;
-    }
-    .quiz-option:hover:not(:disabled) { border-color: var(--accent2); transform: translateX(4px); }
-    .quiz-option.is-correct  { border-color: var(--green); background: color-mix(in srgb, var(--green) 12%, transparent); color: var(--green); }
-    .quiz-option.is-wrong    { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); }
-    .quiz-option:disabled    { cursor: not-allowed; opacity: .75; }
-
-    /* ── Todo styles ──────────────────────────────────────────────── */
-    .todo-item {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      padding: .75rem 1rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: .75rem;
-      animation: fadeUp .3s ease;
-      transition: opacity .3s, transform .3s;
-    }
-    .todo-item.is-done .todo-text { text-decoration: line-through; opacity: .5; }
-    .todo-checkbox {
-      width: 20px; height: 20px;
-      border-radius: 6px;
-      border: 2px solid var(--border);
-      cursor: pointer;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      transition: background .2s, border-color .2s;
-    }
-    .todo-item.is-done .todo-checkbox { background: var(--green); border-color: var(--green); }
-    .todo-delete {
-      margin-left: auto;
-      width: 28px; height: 28px;
-      border-radius: .4rem;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: background .2s, color .2s;
-    }
-    .todo-delete:hover { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
-
-    /* ── Accordion ────────────────────────────────────────────────── */
-    .accordion-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .35s cubic-bezier(.4,0,.2,1);
-    }
-    .accordion-item.is-open .accordion-body { max-height: 200px; }
-    .accordion-icon {
-      transition: transform .3s ease;
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      font-weight: 300;
-    }
-    .accordion-item.is-open .accordion-icon { transform: rotate(45deg); color: var(--accent); }
-
-    /* ── Image gallery ────────────────────────────────────────────── */
-    .gallery-thumb {
-      aspect-ratio: 1;
-      border-radius: .75rem;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border-color .2s, transform .2s;
-    }
-    .gallery-thumb:hover, .gallery-thumb.is-active { border-color: var(--accent); transform: scale(1.04); }
-    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    #gallery-main {
-      border-radius: 1rem;
-      overflow: hidden;
-      aspect-ratio: 16/9;
-      background: var(--surface2);
-      transition: opacity .25s ease;
-    }
-    #gallery-main.is-fading { opacity: 0; }
-    #gallery-main img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* ── IPO badge ────────────────────────────────────────────────── */
-    .ipo-badge {
-      font-family: 'DM Mono', monospace;
-      font-size: .7rem;
-      font-weight: 500;
-      padding: .2rem .6rem;
-      border-radius: 99px;
-      letter-spacing: .05em;
-    }
-    .ipo-input   { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
-    .ipo-process { background: color-mix(in srgb, var(--accent2) 15%, transparent); color: var(--accent2); }
-    .ipo-output  { background: color-mix(in srgb, var(--green) 15%, transparent); color: var(--green); }
-
-    /* ── Scroll reveal ────────────────────────────────────────────── */
-    .reveal { opacity:0; transform:translateY(28px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-
-    /* ── Keyframes ────────────────────────────────────────────────── */
-    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes spin    { to{transform:rotate(360deg)} }
-
-    /* ── Scrollbar ────────────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
-  </style>
 </head>
 
 <body>
@@ -302,40 +34,33 @@
      HEADER — sticky nav with dark mode toggle + hamburger (JS-powered)
      IPO: click → toggle state → classList + localStorage update
 ═════════════════════════════════════════════════════════════════════ -->
-<header style="background:var(--surface);border-bottom:1px solid var(--border);"
-        class="sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+<header class="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--surface)]">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
 
-    <!-- Logo -->
-    <a href="#" class="font-display font-bold text-xl flex items-center gap-2" style="color:var(--text)">
-      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold"
-            style="background:var(--accent)">3</span>
-      NerveSys<span style="color:var(--accent)">.</span>
+    <a href="#" class="font-display flex items-center  text-xl font-bold text-[var(--text)]">
+      <span class="flex h-6 w-[140px] items-center justify-center rounded-lg text-4 font-bold text-[var(--accent)]">Interactive</span>
+        Web Element
     </a>
 
-    <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-6">
-      <a href="#counter"   class="text-sm font-medium transition-colors hover:opacity-70" style="color:var(--text-muted)">Counter</a>
-      <a href="#tabs"      class="text-sm font-medium transition-colors hover:opacity-70" style="color:var(--text-muted)">Tabs</a>
-      <a href="#todo"      class="text-sm font-medium transition-colors hover:opacity-70" style="color:var(--text-muted)">Todo</a>
-      <a href="#quiz"      class="text-sm font-medium transition-colors hover:opacity-70" style="color:var(--text-muted)">Quiz</a>
-      <a href="#accordion" class="text-sm font-medium transition-colors hover:opacity-70" style="color:var(--text-muted)">FAQ</a>
-      <a href="#gallery"   class="text-sm font-medium transition-colors hover:opacity-70" style="color:var(--text-muted)">Gallery</a>
+    <nav class="hidden items-center gap-6 md:flex">
+      <a href="#counter"   class="text-sm font-medium transition-colors hover:opacity-70 text-[var(--text-muted)]">Counter</a>
+      <a href="#tabs"      class="text-sm font-medium transition-colors hover:opacity-70 text-[var(--text-muted)]">Tabs</a>
+      <a href="#todo"      class="text-sm font-medium transition-colors hover:opacity-70 text-[var(--text-muted)]">Todo</a>
+      <a href="#quiz"      class="text-sm font-medium transition-colors hover:opacity-70 text-[var(--text-muted)]">Quiz</a>
+      <a href="#accordion" class="text-sm font-medium transition-colors hover:opacity-70 text-[var(--text-muted)]">FAQ</a>
+      <a href="#gallery"   class="text-sm font-medium transition-colors hover:opacity-70 text-[var(--text-muted)]">Gallery</a>
     </nav>
 
     <div class="flex items-center gap-3">
-      <!-- Dark Mode Toggle — IPO DEMO -->
-      <div class="flex items-center gap-2">
-        <span class="text-lg select-none" id="theme-icon">☀️</span>
+      <div class="flex items-center gap-1">
+        <span class="select-none text-lg" id="theme-icon"></span>
         <button id="js-theme-toggle" aria-label="Toggle dark mode">
           <span class="knob"></span>
         </button>
       </div>
 
-      <!-- Hamburger — mobile only -->
       <button id="js-ham-btn" aria-label="Open menu"
-              class="md:hidden w-10 h-10 rounded-xl flex flex-col items-center justify-center gap-1.5"
-              style="background:var(--surface2);border:1px solid var(--border);">
+              class="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-xl border md:hidden border-[var(--border)] bg-[var(--surface2)]">
         <span class="ham-line"></span>
         <span class="ham-line"></span>
         <span class="ham-line"></span>
@@ -344,35 +69,30 @@
   </div>
 </header>
 
-<!-- Backdrop + Drawer -->
 <div id="drawer-backdrop"></div>
 <nav id="mobile-drawer" aria-label="Mobile navigation">
-  <div class="flex items-center justify-between mb-6">
-    <span class="font-display font-bold text-lg" style="color:var(--text)">Menu</span>
-    <button id="js-drawer-close" class="w-9 h-9 rounded-full flex items-center justify-center text-xl"
-            style="background:var(--surface2);color:var(--text-muted)">×</button>
+  <div class="mb-6 flex items-center justify-between">
+    <span class="font-display text-lg font-bold text-[var(--text)]">Menu</span>
+    <button id="js-drawer-close" class="flex h-9 w-9 items-center justify-center rounded-full text-xl bg-[var(--surface2)] text-[var(--text-muted)]">×</button>
   </div>
-  <a href="#counter"   class="block py-3 px-4 rounded-xl text-base font-medium" style="color:var(--text)" onclick="closeDrawer()">⚡ Counter</a>
-  <a href="#tabs"      class="block py-3 px-4 rounded-xl text-base font-medium" style="color:var(--text)" onclick="closeDrawer()">📑 Tabs</a>
-  <a href="#todo"      class="block py-3 px-4 rounded-xl text-base font-medium" style="color:var(--text)" onclick="closeDrawer()">✅ Todo List</a>
-  <a href="#quiz"      class="block py-3 px-4 rounded-xl text-base font-medium" style="color:var(--text)" onclick="closeDrawer()">🧠 Quiz</a>
-  <a href="#accordion" class="block py-3 px-4 rounded-xl text-base font-medium" style="color:var(--text)" onclick="closeDrawer()">❓ FAQ</a>
-  <a href="#gallery"   class="block py-3 px-4 rounded-xl text-base font-medium" style="color:var(--text)" onclick="closeDrawer()">🖼 Gallery</a>
+  <a href="#counter"   class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> Counter</a>
+  <a href="#tabs"      class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> Tabs</a>
+  <a href="#todo"      class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> Todo List</a>
+  <a href="#quiz"      class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> Quiz</a>
+  <a href="#accordion" class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> FAQ</a>
+  <a href="#gallery"   class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> Gallery</a>
 </nav>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     HERO
-═════════════════════════════════════════════════════════════════════ -->
-<section style="background:var(--bg);" class="py-20 md:py-28 overflow-hidden relative">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<section class="relative overflow-hidden py-20 md:py-28 bg-[var(--bg)]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
       <div>
         <span class="ipo-badge ipo-process mb-5 inline-block">DecodeLabs · Project 3</span>
-        <h1 class="hero-title font-display font-extrabold mb-6" style="color:var(--text)">
-          Engineering the<br/><span style="color:var(--accent)">Client-Side</span><br/>Nervous System
+        <h1 class="hero-title mb-6 font-bold text-[var(--text)]">
+          Engineering the<br/><span class="text-[var(--accent)]">Client-Side</span><br/>Nervous System
         </h1>
-        <p class="text-base leading-relaxed mb-8" style="color:var(--text-muted)">
-          Every interaction on this page follows the <strong style="color:var(--text)">IPO loop</strong>:
+        <p class="text-base leading-relaxed mb-8 text-[var(--text-muted)]">
+          Every interaction on this page follows the <strong class="text-[var(--text)]">IPO loop</strong>:
           Input → Process → Output. Click anything. Watch state change. That's JavaScript DOM manipulation in action.
         </p>
         <div class="flex flex-wrap gap-3">
@@ -382,21 +102,20 @@
         </div>
       </div>
 
-      <!-- IPO loop visual -->
       <div class="card p-6">
-        <p class="font-mono text-xs mb-4" style="color:var(--text-muted)">// IPO Loop — Dark Mode Toggle</p>
+        <p class="font-mono text-xs mb-4 text-[var(--text-muted)]">// IPO Loop — Dark Mode Toggle</p>
         <div class="flex flex-col gap-3">
-          <div class="card-inner p-4 flex items-start gap-3">
+          <div class="card-inner flex items-start gap-3 p-4">
             <span class="ipo-badge ipo-input mt-0.5 shrink-0">INPUT</span>
-            <p class="text-sm" style="color:var(--text)">User clicks the theme toggle button → <code class="font-mono text-xs" style="color:var(--accent)">'click'</code> event fires</p>
+            <p class="text-sm" text-[var(--text)]>User clicks the theme toggle button → <code class="font-mono text-xs text-[var(--accent)]">'click'</code> event fires</p>
           </div>
-          <div class="card-inner p-4 flex items-start gap-3">
+          <div class="card-inner flex items-start gap-3 p-4">
             <span class="ipo-badge ipo-process mt-0.5 shrink-0">PROCESS</span>
-            <p class="text-sm" style="color:var(--text)">JS reads current theme state, flips it, saves to <code class="font-mono text-xs" style="color:var(--accent2)">localStorage</code></p>
+            <p class="text-sm" text-[var(--text)]>JS reads current theme state, flips it, saves to <code class="font-mono text-xs text-[var(--accent2)]">localStorage</code></p>
           </div>
-          <div class="card-inner p-4 flex items-start gap-3">
+          <div class="card-inner flex items-start gap-3 p-4">
             <span class="ipo-badge ipo-output mt-0.5 shrink-0">OUTPUT</span>
-            <p class="text-sm" style="color:var(--text)"><code class="font-mono text-xs" style="color:var(--green)">document.documentElement.dataset.theme</code> toggles → CSS variables re-cascade</p>
+            <p class="text-sm" text-[var(--text)]><code class="font-mono text-xs text-[var(--green)]">document.documentElement.dataset.theme</code> toggles → CSS variables re-cascade</p>
           </div>
         </div>
       </div>
@@ -404,254 +123,215 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     SECTION 1 — COUNTER
-     Skills: addEventListener, textContent, state variable, classList
-═════════════════════════════════════════════════════════════════════ -->
-<section id="counter" style="background:var(--surface);" class="py-16 md:py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+<section id="counter" class="py-16 md:py-20 bg-[var(--surface)]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
 
-      <!-- Description -->
       <div class="reveal">
         <span class="ipo-badge ipo-input mb-4 inline-block">Phase 1 · Input + State</span>
-        <h2 class="section-title font-display font-bold mb-4" style="color:var(--text)">Interactive Counter</h2>
-        <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
-          Demonstrates: <strong style="color:var(--text)">state variables</strong> (<code class="font-mono text-xs">let count</code>),
-          <strong style="color:var(--text)">event listeners</strong>, <code class="font-mono text-xs">textContent</code> DOM mutation,
+        <h2 class="section-title font-display mb-4 font-bold text-[var(--text)]">Interactive Counter</h2>
+        <p class="text-sm leading-relaxed mb-5 text-[var(--text-muted)]">
+          Demonstrates: <strong class="text-[var(--text)]">state variables</strong> (<code class="font-mono text-xs">let count</code>),
+          <strong class="text-[var(--text)]">event listeners</strong>, <code class="font-mono text-xs">textContent</code> DOM mutation,
           and conditional logic clamping the value.
         </p>
         <div class="card-inner p-4">
-          <pre class="font-mono text-xs leading-relaxed overflow-x-auto" style="color:var(--text-muted)"><span style="color:var(--accent2)">let</span> <span style="color:var(--text)">count</span> = <span style="color:var(--amber)">0</span>;            <span style="color:var(--border)">// STATE</span>
+          <pre class="font-mono text-xs leading-relaxed overflow-x-auto text-[var(--text-muted)]"><span class="text-[var(--accent2)]">let</span> <span class="text-[var(--text)]">count</span> = <span class="text-[var(--amber)]">0</span>;            <span class="text-[var(--border)]">// STATE</span>
 
-<span style="color:var(--text)">btnPlus</span>.<span style="color:var(--green)">addEventListener</span>(<span style="color:var(--amber)">'click'</span>, () =&gt; {
-  count++;                 <span style="color:var(--border)">// PROCESS</span>
-  display.<span style="color:var(--green)">textContent</span> = count; <span style="color:var(--border)">// OUTPUT</span>
+<span class="text-[var(--text)]">btnPlus</span>.<span class="text-[var(--green)]">addEventListener</span>(<span class="text-[var(--amber)]">'click'</span>, () =&gt; {
+  count++;                 <span class="text-[var(--border)]">// PROCESS</span>
+  display.<span class="text-[var(--green)]">textContent</span> = count; <span class="text-[var(--border)]">// OUTPUT</span>
 });</pre>
         </div>
       </div>
 
-      <!-- Counter widget -->
-      <div class="card p-8 text-center reveal">
-        <p class="font-mono text-xs mb-2" style="color:var(--text-muted)">// current state</p>
+      <div class="card reveal p-8 text-center">
+        <p class="font-mono text-xs mb-2 text-[var(--text-muted)]">// current state</p>
         <div id="js-count-display">0</div>
-        <p id="js-count-label" class="font-mono text-xs mt-2 mb-8 h-4" style="color:var(--text-muted)"></p>
+        <p id="js-count-label" class="font-mono h-4 mt-2 mb-8 text-xs text-[var(--text-muted)]"></p>
 
-        <div class="flex justify-center gap-3 flex-wrap">
+        <div class="flex flex-wrap justify-center gap-3">
           <button id="js-btn-minus"
-            class="w-14 h-14 rounded-2xl text-2xl font-bold border-2 transition-transform active:scale-90"
-            style="background:var(--surface2);border-color:var(--border);color:var(--text)">−</button>
+            class="h-14 w-14 active:scale-90 rounded-2xl border-2 text-2xl font-bold transition-transform bg-[var(--surface2)] border-[var(--border)] text-[var(--text)]">−</button>
           <button id="js-btn-reset"
-            class="px-6 h-14 rounded-2xl text-sm font-mono font-medium border-2 transition-transform active:scale-90"
-            style="background:var(--surface2);border-color:var(--border);color:var(--text-muted)">reset</button>
+            class="h-14 active:scale-90 rounded-2xl border-2 px-6 font-mono text-sm font-medium transition-transform bg-[var(--surface2)] border-[var(--border)] text-[var(--text-muted)]">reset</button>
           <button id="js-btn-plus"
-            class="w-14 h-14 rounded-2xl text-2xl font-bold border-2 transition-transform active:scale-90"
-            style="background:var(--accent);border-color:var(--accent);color:#fff">+</button>
+            class="h-14 w-14 active:scale-90 rounded-2xl border-2 text-2xl font-bold transition-transform text-white bg-[var(--accent)] border-[var(--accent)]">+</button>
         </div>
 
-        <div class="mt-6 flex justify-center gap-2 flex-wrap">
-          <span class="font-mono text-xs px-3 py-1 rounded-full" style="background:var(--surface2);color:var(--text-muted)">Min: 0</span>
-          <span class="font-mono text-xs px-3 py-1 rounded-full" style="background:var(--surface2);color:var(--text-muted)">Max: 10</span>
-          <span id="js-count-bar-wrap" class="font-mono text-xs px-3 py-1 rounded-full" style="background:var(--surface2);color:var(--text-muted)">
+        <div class="mt-6 flex flex-wrap justify-center gap-2">
+          <span class="font-mono text-xs rounded-full px-3 py-1 bg-[var(--surface2)] text-[var(--text-muted)]">Min: 0</span>
+          <span class="font-mono text-xs rounded-full px-3 py-1 bg-[var(--surface2)] text-[var(--text-muted)]">Max: 10</span>
+          <span id="js-count-bar-wrap" class="font-mono text-xs rounded-full px-3 py-1 bg-[var(--surface2)] text-[var(--text-muted)]">
             Progress: <span id="js-count-pct">0%</span>
           </span>
         </div>
 
-        <!-- Progress bar — DOM-mutated width -->
-        <div class="mt-3 h-2 rounded-full overflow-hidden" style="background:var(--border)">
-          <div id="js-progress-bar" class="h-full rounded-full transition-all duration-300"
-               style="width:0%;background:var(--accent)"></div>
+        <div class="mt-3 h-2 rounded-full overflow-hidden bg-[var(--border)]">
+          <div id="js-progress-bar" class="h-full rounded-full transition-all duration-300 w-0 bg-[var(--accent)]"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     SECTION 2 — TAB SWITCHER
-     Skills: querySelectorAll, forEach, classList.toggle/add/remove
-═════════════════════════════════════════════════════════════════════ -->
-<section id="tabs" style="background:var(--bg);" class="py-16 md:py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="reveal text-center mb-10">
+<section id="tabs" class="py-16 md:py-20 bg-[var(--bg)]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="reveal mb-10 text-center">
       <span class="ipo-badge ipo-process mb-4 inline-block">classList · querySelectorAll</span>
-      <h2 class="section-title font-display font-bold" style="color:var(--text)">Tab Switcher</h2>
-      <p class="text-sm mt-2" style="color:var(--text-muted)">JS toggles <code class="font-mono text-xs">is-active</code> class. CSS handles the show/hide. Decoupled.</p>
+      <h2 class="section-title font-display font-bold text-[var(--text)]">Tab Switcher</h2>
+      <p class="text-sm mt-2 text-[var(--text-muted)]">JS toggles <code class="font-mono text-xs">is-active</code> class. CSS handles the show/hide. Decoupled.</p>
     </div>
 
-    <div class="card p-6 md:p-8 reveal">
-      <!-- Tab buttons -->
-      <div class="flex flex-wrap gap-2 mb-6 pb-4" style="border-bottom:1px solid var(--border)">
+    <div class="card reveal p-6 md:p-8">
+      <div class="mb-6 flex flex-wrap gap-2 pb-4 border-b border-[var(--border)]">
         <button class="tab-btn is-active js-tab" data-target="tab-html">HTML</button>
         <button class="tab-btn js-tab" data-target="tab-css">CSS</button>
         <button class="tab-btn js-tab" data-target="tab-js">JavaScript</button>
         <button class="tab-btn js-tab" data-target="tab-dom">DOM</button>
       </div>
 
-      <!-- Tab panels -->
       <div id="tab-html" class="tab-panel is-active">
-        <h3 class="font-display font-bold text-lg mb-3" style="color:var(--text)">HTML — The Bones 🦴</h3>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--text-muted)">HTML provides the structural scaffolding. It describes <em>what</em> is on the page — headings, paragraphs, buttons, images — but has no knowledge of how it looks or behaves.</p>
+        <h3 class="font-display text-lg mb-3 font-bold text-[var(--text)]">HTML — The Bones 🦴</h3>
+        <p class="text-sm leading-relaxed mb-4 text-[var(--text-muted)]">HTML provides the structural scaffolding. It describes <em>what</em> is on the page — headings, paragraphs, buttons, images — but has no knowledge of how it looks or behaves.</p>
         <div class="card-inner p-4">
-          <code class="font-mono text-xs" style="color:var(--accent2)">&lt;button <span style="color:var(--green)">class</span>=<span style="color:var(--amber)">"js-submit btn-primary"</span>&gt;Submit&lt;/button&gt;</code>
-          <p class="text-xs mt-2" style="color:var(--text-muted)">Note: <code class="font-mono">js-</code> prefix = JS hook. <code class="font-mono">btn-primary</code> = CSS styling. Decoupled.</p>
+          <code class="font-mono text-xs text-[var(--accent2)]">&lt;button <span class="text-[var(--green)]">class</span>=<span class="text-[var(--amber)]">"js-submit btn-primary"</span>&gt;Submit&lt;/button&gt;</code>
+          <p class="text-xs mt-2 text-[var(--text-muted)]">Note: <code class="font-mono">js-</code> prefix = JS hook. <code class="font-mono">btn-primary</code> = CSS styling. Decoupled.</p>
         </div>
       </div>
 
       <div id="tab-css" class="tab-panel">
-        <h3 class="font-display font-bold text-lg mb-3" style="color:var(--text)">CSS — The Skin 🎨</h3>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--text-muted)">CSS handles all visual states. When JavaScript toggles a class like <code class="font-mono text-xs">is-active</code>, CSS animates the transition. JS never touches inline styles directly.</p>
+        <h3 class="font-display text-lg mb-3 font-bold text-[var(--text)]">CSS — The Skin 🎨</h3>
+        <p class="text-sm leading-relaxed mb-4 text-[var(--text-muted)]">CSS handles all visual states. When JavaScript toggles a class like <code class="font-mono text-xs">is-active</code>, CSS animates the transition. JS never touches inline styles directly.</p>
         <div class="card-inner p-4">
-          <pre class="font-mono text-xs leading-relaxed" style="color:var(--text-muted)"><span style="color:var(--accent2)">.tab-panel</span>  { <span style="color:var(--green)">display</span>: none; }
-<span style="color:var(--accent2)">.tab-panel</span><span style="color:var(--amber)">.is-active</span> { <span style="color:var(--green)">display</span>: block; }</pre>
+          <pre class="font-mono text-xs leading-relaxed text-[var(--text-muted)]"><span class="text-[var(--accent2)]">.tab-panel</span>  { <span class="text-[var(--green)]">display</span>: none; }
+<span class="text-[var(--accent2)]">.tab-panel</span><span class="text-[var(--amber)]">.is-active</span> { <span class="text-[var(--green)]">display</span>: block; }</pre>
         </div>
       </div>
 
       <div id="tab-js" class="tab-panel">
-        <h3 class="font-display font-bold text-lg mb-3" style="color:var(--text)">JavaScript — The Nervous System ⚡</h3>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--text-muted)">JavaScript listens for events, processes state, and mutates the DOM by toggling CSS classes — never by writing inline styles. This is the professional standard.</p>
+        <h3 class="font-display text-lg mb-3 font-bold text-[var(--text)]">JavaScript — The Nervous System ⚡</h3>
+        <p class="text-sm leading-relaxed mb-4 text-[var(--text-muted)]">JavaScript listens for events, processes state, and mutates the DOM by toggling CSS classes — never by writing inline styles. This is the professional standard.</p>
         <div class="card-inner p-4">
-          <pre class="font-mono text-xs leading-relaxed" style="color:var(--text-muted)"><span style="color:var(--accent2)">const</span> tabs = document.<span style="color:var(--green)">querySelectorAll</span>(<span style="color:var(--amber)">'.js-tab'</span>);
-tabs.<span style="color:var(--green)">forEach</span>(btn =&gt; {
-  btn.<span style="color:var(--green)">addEventListener</span>(<span style="color:var(--amber)">'click'</span>, switchTab);
+          <pre class="font-mono text-xs leading-relaxed text-[var(--text-muted)]"><span class="text-[var(--accent2)]">const</span> tabs = document.<span class="text-[var(--green)]">querySelectorAll</span>(<span class="text-[var(--amber)]">'.js-tab'</span>);
+tabs.<span class="text-[var(--green)]">forEach</span>(btn =&gt; {
+  btn.<span class="text-[var(--green)]">addEventListener</span>(<span class="text-[var(--amber)]">'click'</span>, switchTab);
 });</pre>
         </div>
       </div>
 
       <div id="tab-dom" class="tab-panel">
-        <h3 class="font-display font-bold text-lg mb-3" style="color:var(--text)">The DOM — The Living Map 🗺</h3>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--text-muted)">The Document Object Model is the browser's live, in-memory representation of your HTML. It's rebuilt on every page load. JavaScript uses it as an API to read and update the page dynamically.</p>
+        <h3 class="font-display text-lg mb-3 font-bold text-[var(--text)]">The DOM — The Living Map 🗺</h3>
+        <p class="text-sm leading-relaxed mb-4 text-[var(--text-muted)]">The Document Object Model is the browser's live, in-memory representation of your HTML. It's rebuilt on every page load. JavaScript uses it as an API to read and update the page dynamically.</p>
         <div class="card-inner p-4">
-          <p class="font-mono text-xs" style="color:var(--text-muted)">HTML → Browser Engine → <span style="color:var(--green)">DOM Tree</span> → JavaScript API</p>
-          <p class="font-mono text-xs mt-2" style="color:var(--accent2)">document.querySelector('.js-btn') → Node</p>
+          <p class="font-mono text-xs text-[var(--text-muted)]">HTML → Browser Engine → <span class="text-[var(--green)]">DOM Tree</span> → JavaScript API</p>
+          <p class="font-mono mt-2 text-xs text-[var(--accent2)]">document.querySelector('.js-btn') → Node</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     SECTION 3 — TODO LIST
-     Skills: createElement, appendChild, textContent, array state
-═════════════════════════════════════════════════════════════════════ -->
-<section id="todo" style="background:var(--surface);" class="py-16 md:py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+<section id="todo" class="py-16 md:py-20 bg-[var(--surface)]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-2">
 
       <div class="reveal">
         <span class="ipo-badge ipo-output mb-4 inline-block">createElement · appendChild</span>
-        <h2 class="section-title font-display font-bold mb-4" style="color:var(--text)">Dynamic Todo List</h2>
-        <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted)">
-          Demonstrates <strong style="color:var(--text)">node creation</strong> — using <code class="font-mono text-xs">document.createElement()</code>
+        <h2 class="section-title font-display mb-4 font-bold text-[var(--text)]">Dynamic Todo List</h2>
+        <p class="text-sm leading-relaxed mb-5 text-[var(--text-muted)]">
+          Demonstrates <strong class="text-[var(--text)]">node creation</strong> — using <code class="font-mono text-xs">document.createElement()</code>
           and <code class="font-mono text-xs">appendChild()</code> to build new DOM nodes on the fly. State is an array.
         </p>
         <div class="card-inner p-4">
-          <pre class="font-mono text-xs leading-relaxed" style="color:var(--text-muted)"><span style="color:var(--accent2)">function</span> <span style="color:var(--green)">addTodo</span>(text) {
-  <span style="color:var(--accent2)">const</span> li = document.<span style="color:var(--green)">createElement</span>(<span style="color:var(--amber)">'li'</span>);
-  li.<span style="color:var(--green)">textContent</span> = text; <span style="color:var(--border)">// safe! no XSS</span>
-  list.<span style="color:var(--green)">appendChild</span>(li);
+          <pre class="font-mono text-xs leading-relaxed text-[var(--text-muted)]"><span class="text-[var(--accent2)]">function</span> <span class="text-[var(--green)]">addTodo</span>(text) {
+  <span class="text-[var(--accent2)]">const</span> li = document.<span class="text-[var(--green)]">createElement</span>(<span class="text-[var(--amber)]">'li'</span>);
+  li.<span class="text-[var(--green)]">textContent</span> = text; <span class="text-[var(--border)]">// safe! no XSS</span>
+  list.<span class="text-[var(--green)]">appendChild</span>(li);
 }</pre>
         </div>
-        <p class="text-xs mt-4 p-3 rounded-lg font-mono" style="background:color-mix(in srgb,var(--green) 12%,transparent);color:var(--green)">
+        <p class="mt-4 rounded-lg font-mono text-xs p-3 bg-[color-mix(in_srgb,var(--green)_12%,transparent)] text-[var(--green)]">
           ✅ Use textContent — never innerHTML for user input (XSS risk)
         </p>
       </div>
 
-      <!-- Todo widget -->
-      <div class="card p-6 reveal">
-        <div class="flex gap-2 mb-5">
+      <div class="card reveal p-6">
+        <div class="mb-5 flex gap-2">
           <input id="js-todo-input" type="text" placeholder="Add a new task..."
-                 class="flex-1 h-11 px-4 rounded-xl text-sm outline-none"
-                 style="background:var(--surface2);border:1.5px solid var(--border);color:var(--text)"/>
+                 class="h-11 flex-1 rounded-xl px-4 text-sm outline-none border-[1.5px] bg-[var(--surface2)] border-[var(--border)] text-[var(--text)]"/>
           <button id="js-todo-add"
-                  class="h-11 px-5 rounded-xl text-sm font-semibold text-white transition-transform active:scale-95"
-                  style="background:var(--accent)">Add</button>
+                  class="h-11 active:scale-95 rounded-xl px-5 text-sm font-semibold text-white transition-transform bg-[var(--accent)]">Add</button>
         </div>
 
         <ul id="js-todo-list" class="flex flex-col gap-2 min-h-[60px]">
-          <!-- Populated by JS -->
-        </ul>
+          </ul>
 
-        <div class="flex items-center justify-between mt-4 pt-4" style="border-top:1px solid var(--border)">
-          <span id="js-todo-count" class="font-mono text-xs" style="color:var(--text-muted)">0 items</span>
-          <button id="js-todo-clear" class="font-mono text-xs px-3 py-1.5 rounded-lg transition-colors"
-                  style="background:var(--surface2);color:var(--text-muted)">Clear done</button>
+        <div class="mt-4 flex items-center justify-between pt-4 border-t border-[var(--border)]">
+          <span id="js-todo-count" class="font-mono text-xs text-[var(--text-muted)]">0 items</span>
+          <button id="js-todo-clear" class="font-mono text-xs rounded-lg px-3 py-1.5 transition-colors bg-[var(--surface2)] text-[var(--text-muted)]">Clear done</button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     SECTION 4 — QUIZ
-     Skills: conditional logic, state machine, DOM update, scoring
-═════════════════════════════════════════════════════════════════════ -->
-<section id="quiz" style="background:var(--bg);" class="py-16 md:py-20">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6">
-    <div class="reveal text-center mb-10">
+<section id="quiz" class="py-16 md:py-20 bg-[var(--bg)]">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+    <div class="reveal mb-10 text-center">
       <span class="ipo-badge ipo-process mb-4 inline-block">State Machine · Conditional Logic</span>
-      <h2 class="section-title font-display font-bold" style="color:var(--text)">JavaScript Knowledge Quiz</h2>
-      <p class="text-sm mt-2" style="color:var(--text-muted)">A state machine tracks current question, score, and answers.</p>
+      <h2 class="section-title font-display font-bold text-[var(--text)]">JavaScript Knowledge Quiz</h2>
+      <p class="text-sm mt-2 text-[var(--text-muted)]">A state machine tracks current question, score, and answers.</p>
     </div>
 
-    <div class="card p-6 md:p-8 reveal">
-      <!-- Progress -->
-      <div class="flex items-center justify-between mb-2">
-        <span id="js-quiz-progress" class="font-mono text-xs" style="color:var(--text-muted)">Question 1 / 5</span>
-        <span id="js-quiz-score-live" class="font-mono text-xs" style="color:var(--green)">Score: 0</span>
+    <div class="card reveal p-6 md:p-8">
+      <div class="mb-2 flex items-center justify-between">
+        <span id="js-quiz-progress" class="font-mono text-xs text-[var(--text-muted)]">Question 1 / 5</span>
+        <span id="js-quiz-score-live" class="font-mono text-xs text-[var(--green)]">Score: 0</span>
       </div>
-      <div class="h-1.5 rounded-full mb-6 overflow-hidden" style="background:var(--border)">
-        <div id="js-quiz-prog-bar" class="h-full rounded-full transition-all duration-500"
-             style="width:0%;background:var(--accent2)"></div>
+      <div class="mb-6 h-1.5 rounded-full overflow-hidden bg-[var(--border)]">
+        <div id="js-quiz-prog-bar" class="h-full rounded-full transition-all duration-500 w-0 bg-[var(--accent2)]"></div>
       </div>
 
-      <p id="js-quiz-question" class="font-display font-bold text-lg mb-5" style="color:var(--text)"></p>
+      <p id="js-quiz-question" class="font-display mb-5 text-lg font-bold text-[var(--text)]"></p>
 
-      <div id="js-quiz-options" class="flex flex-col gap-3 mb-6"></div>
+      <div id="js-quiz-options" class="mb-6 flex flex-col gap-3"></div>
 
-      <div id="js-quiz-feedback" class="hidden p-4 rounded-xl text-sm font-medium mb-4"></div>
+      <div id="js-quiz-feedback" class="hidden rounded-xl p-4 text-sm font-medium mb-4"></div>
 
       <div class="flex items-center justify-between">
-        <span id="js-quiz-hint" class="text-xs" style="color:var(--text-muted)"></span>
+        <span id="js-quiz-hint" class="text-xs text-[var(--text-muted)]"></span>
         <button id="js-quiz-next"
-                class="px-6 py-2.5 rounded-xl text-sm font-semibold text-white hidden transition-transform active:scale-95"
-                style="background:var(--accent2)">Next →</button>
+                class="active:scale-95 rounded-xl px-6 py-2.5 text-sm font-semibold text-white hidden transition-transform bg-[var(--accent2)]">Next →</button>
       </div>
 
-      <!-- Results screen (hidden initially) -->
-      <div id="js-quiz-results" class="hidden text-center py-6">
-        <div class="text-5xl mb-4">🎯</div>
-        <h3 class="font-display font-bold text-2xl mb-2" style="color:var(--text)">Quiz Complete!</h3>
-        <p id="js-quiz-final-score" class="text-lg mb-6" style="color:var(--text-muted)"></p>
+      <div id="js-quiz-results" class="hidden py-6 text-center">
+        <div class="mb-4 text-5xl">🎯</div>
+        <h3 class="font-display mb-2 text-2xl font-bold text-[var(--text)]">Quiz Complete!</h3>
+        <p id="js-quiz-final-score" class="text-lg mb-6 text-[var(--text-muted)]"></p>
         <button id="js-quiz-restart"
-                class="px-8 py-3 rounded-xl font-semibold text-white"
-                style="background:var(--accent)">Restart Quiz</button>
+                class="rounded-xl px-8 py-3 font-semibold text-white bg-[var(--accent)]">Restart Quiz</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     SECTION 5 — ACCORDION / FAQ
-     Skills: classList.toggle, event delegation, is- prefix state
-═════════════════════════════════════════════════════════════════════ -->
-<section id="accordion" style="background:var(--surface);" class="py-16 md:py-20">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6">
-    <div class="reveal text-center mb-10">
+<section id="accordion" class="py-16 md:py-20 bg-[var(--surface)]">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+    <div class="reveal mb-10 text-center">
       <span class="ipo-badge ipo-input mb-4 inline-block">classList.toggle · is- prefix</span>
-      <h2 class="section-title font-display font-bold" style="color:var(--text)">FAQ Accordion</h2>
-      <p class="text-sm mt-2" style="color:var(--text-muted)">JS toggles <code class="font-mono text-xs">is-open</code>. CSS animates max-height. Professional decoupling.</p>
+      <h2 class="section-title font-display font-bold text-[var(--text)]">FAQ Accordion</h2>
+      <p class="text-sm mt-2 text-[var(--text-muted)]">JS toggles <code class="font-mono text-xs">is-open</code>. CSS animates max-height. Professional decoupling.</p>
     </div>
 
-    <div class="flex flex-col gap-3 reveal" id="js-accordion">
+    <div class="reveal flex flex-col gap-3" id="js-accordion">
 
       <div class="accordion-item card overflow-hidden">
-        <button class="js-accordion-btn w-full flex items-center justify-between p-5 text-left">
-          <span class="font-semibold text-sm" style="color:var(--text)">What is the IPO loop?</span>
+        <button class="js-accordion-btn flex w-full items-center justify-between p-5 text-left">
+          <span class="text-sm font-semibold text-[var(--text)]">What is the IPO loop?</span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
-          <p class="px-5 pb-5 text-sm leading-relaxed" style="color:var(--text-muted)">
+          <p class="px-5 pb-5 text-sm leading-relaxed text-[var(--text-muted)]">
             Input–Process–Output is the universal law of software engineering. Every interactive element follows it:
             an event fires (Input), JavaScript evaluates state and applies logic (Process), and the DOM updates visually (Output).
           </p>
@@ -659,12 +339,12 @@ tabs.<span style="color:var(--green)">forEach</span>(btn =&gt; {
       </div>
 
       <div class="accordion-item card overflow-hidden">
-        <button class="js-accordion-btn w-full flex items-center justify-between p-5 text-left">
-          <span class="font-semibold text-sm" style="color:var(--text)">Why use <code class="font-mono">const</code> by default?</span>
+        <button class="js-accordion-btn flex w-full items-center justify-between p-5 text-left">
+          <span class="text-sm font-semibold text-[var(--text)]">Why use <code class="font-mono">const</code> by default?</span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
-          <p class="px-5 pb-5 text-sm leading-relaxed" style="color:var(--text-muted)">
+          <p class="px-5 pb-5 text-sm leading-relaxed text-[var(--text-muted)]">
             <code class="font-mono">const</code> signals intent — "this binding will never be reassigned." It prevents accidental mutations and makes code easier to reason about.
             Use <code class="font-mono">let</code> only when you know the value must change (like a counter). Never use <code class="font-mono">var</code>.
           </p>
@@ -672,12 +352,12 @@ tabs.<span style="color:var(--green)">forEach</span>(btn =&gt; {
       </div>
 
       <div class="accordion-item card overflow-hidden">
-        <button class="js-accordion-btn w-full flex items-center justify-between p-5 text-left">
-          <span class="font-semibold text-sm" style="color:var(--text)">Why avoid <code class="font-mono">innerHTML</code> for user data?</span>
+        <button class="js-accordion-btn flex w-full items-center justify-between p-5 text-left">
+          <span class="text-sm font-semibold text-[var(--text)]">Why avoid <code class="font-mono">innerHTML</code> for user data?</span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
-          <p class="px-5 pb-5 text-sm leading-relaxed" style="color:var(--text-muted)">
+          <p class="px-5 pb-5 text-sm leading-relaxed text-[var(--text-muted)]">
             <code class="font-mono">innerHTML</code> parses strings as HTML, opening the door to Cross-Site Scripting (XSS) attacks if user input is injected.
             Always use <code class="font-mono">textContent</code> for user-provided data — it treats the value as plain text, never as markup.
           </p>
@@ -685,12 +365,12 @@ tabs.<span style="color:var(--green)">forEach</span>(btn =&gt; {
       </div>
 
       <div class="accordion-item card overflow-hidden">
-        <button class="js-accordion-btn w-full flex items-center justify-between p-5 text-left">
-          <span class="font-semibold text-sm" style="color:var(--text)">What is the <code class="font-mono">js-</code> / <code class="font-mono">is-</code> naming convention?</span>
+        <button class="js-accordion-btn flex w-full items-center justify-between p-5 text-left">
+          <span class="text-sm font-semibold text-[var(--text)]">What is the <code class="font-mono">js-</code> / <code class="font-mono">is-</code> naming convention?</span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
-          <p class="px-5 pb-5 text-sm leading-relaxed" style="color:var(--text-muted)">
+          <p class="px-5 pb-5 text-sm leading-relaxed text-[var(--text-muted)]">
             <code class="font-mono">js-</code> classes are JavaScript hooks — never styled with CSS. <code class="font-mono">is-</code> classes represent visual state (e.g. <code class="font-mono">is-active</code>, <code class="font-mono">is-hidden</code>) — toggled by JS, styled by CSS.
             This decouples markup, style, and behaviour — the mark of professional code.
           </p>
@@ -701,27 +381,21 @@ tabs.<span style="color:var(--green)">forEach</span>(btn =&gt; {
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     SECTION 6 — DYNAMIC IMAGE GALLERY
-     Skills: event delegation, DOM attribute mutation, classList
-═════════════════════════════════════════════════════════════════════ -->
-<section id="gallery" style="background:var(--bg);" class="py-16 md:py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="reveal text-center mb-10">
+<section id="gallery" class="py-16 md:py-20 bg-[var(--bg)]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="reveal mb-10 text-center">
       <span class="ipo-badge ipo-output mb-4 inline-block">DOM Attributes · Event Delegation</span>
-      <h2 class="section-title font-display font-bold" style="color:var(--text)">Dynamic Image Gallery</h2>
-      <p class="text-sm mt-2" style="color:var(--text-muted)">Click a thumbnail — JS updates <code class="font-mono text-xs">src</code> attribute on the main image. CSS fades the transition.</p>
+      <h2 class="section-title font-display font-bold text-[var(--text)]">Dynamic Image Gallery</h2>
+      <p class="text-sm mt-2 text-[var(--text-muted)]">Click a thumbnail — JS updates <code class="font-mono text-xs">src</code> attribute on the main image. CSS fades the transition.</p>
     </div>
 
-    <div class="card p-6 reveal">
-      <!-- Main display -->
+    <div class="card reveal p-6">
       <div id="gallery-main" class="mb-5">
         <img id="js-gallery-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" alt="Gallery main" />
       </div>
-      <p id="js-gallery-caption" class="text-center text-sm mb-5 font-medium" style="color:var(--text-muted)">Coding Setup</p>
+      <p id="js-gallery-caption" class="text-center text-sm mb-5 font-medium text-[var(--text-muted)]">Coding Setup</p>
 
-      <!-- Thumbnails — event delegation on container -->
-      <div id="js-gallery-thumbs" class="grid grid-cols-4 sm:grid-cols-5 gap-3">
+      <div id="js-gallery-thumbs" class="grid grid-cols-4 gap-3 sm:grid-cols-5">
         <div class="gallery-thumb is-active js-thumb" data-src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" data-caption="Coding Setup">
           <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=200&q=60" alt="Coding"/>
         </div>
@@ -742,457 +416,27 @@ tabs.<span style="color:var(--green)">forEach</span>(btn =&gt; {
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     FOOTER
-═════════════════════════════════════════════════════════════════════ -->
-<footer style="background:var(--text);color:var(--bg);" class="py-10">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <span class="font-display font-bold text-xl">NerveSys<span style="color:var(--accent)">.</span></span>
+<footer class="py-10 bg-[var(--text)] text-[var(--bg)]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+      <span class="font-display text-xl font-bold">NerveSys<span class="text-[var(--accent)]">.</span></span>
       <p class="font-mono text-xs text-center opacity-60">DecodeLabs · Project 3 · Interactive Web Elements</p>
       <p class="font-mono text-xs opacity-60">© 2026</p>
     </div>
-    <!-- Checklist -->
-    <div class="mt-8 pt-6 flex flex-wrap justify-center gap-2" style="border-top:1px solid rgba(255,255,255,.1)">
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Dark Mode Toggle</span>
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Hamburger Nav</span>
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Counter + State</span>
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Tab Switcher</span>
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Todo List (createElement)</span>
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Quiz (State Machine)</span>
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Accordion</span>
-      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70" style="background:rgba(255,255,255,.08)">✓ Image Gallery</span>
+    <div class="mt-8 flex flex-wrap justify-center gap-2 pt-6 border-t border-[rgba(255,255,255,.1)]">
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Dark Mode Toggle</span>
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Hamburger Nav</span>
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Counter + State</span>
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Tab Switcher</span>
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Todo List (createElement)</span>
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Quiz (State Machine)</span>
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Accordion</span>
+      <span class="font-mono text-xs px-3 py-1.5 rounded-full opacity-70 bg-[rgba(255,255,255,.08)]">✓ Image Gallery</span>
     </div>
   </div>
 </footer>
 
+<script src="script.js"></script>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     JAVASCRIPT — All interactions follow the IPO loop
-     Engineering standards:
-       • const by default, let only when mutation required
-       • js- prefix for JS hooks, is- prefix for visual state
-       • textContent (not innerHTML) for user data
-       • Small, single-purpose functions
-       • State kept in variables, DOM is just the view
-═════════════════════════════════════════════════════════════════════ -->
-<script>
-'use strict';
-
-/* ═══════════════════════════════════════════════════════════════
-   1. DARK MODE TOGGLE
-   INPUT:  click on #js-theme-toggle
-   PROCESS: read current theme, flip it, save to localStorage
-   OUTPUT: update data-theme attribute → CSS variables re-cascade
-═══════════════════════════════════════════════════════════════ */
-const html       = document.documentElement;
-const themeToggle = document.querySelector('#js-theme-toggle');
-const themeIcon   = document.querySelector('#theme-icon');
-
-// State: restore from localStorage on load
-let isDark = localStorage.getItem('theme') === 'dark';
-applyTheme(isDark);
-
-function applyTheme(dark) {
-  html.dataset.theme  = dark ? 'dark' : 'light';
-  themeIcon.textContent = dark ? '🌙' : '☀️';
-}
-
-themeToggle.addEventListener('click', () => {
-  isDark = !isDark;                       // PROCESS: flip state
-  applyTheme(isDark);                     // OUTPUT: mutate DOM
-  localStorage.setItem('theme', isDark ? 'dark' : 'light'); // persist
-});
-
-
-/* ═══════════════════════════════════════════════════════════════
-   2. HAMBURGER / MOBILE DRAWER
-   INPUT:  click ham button or backdrop
-   PROCESS: toggle is-open class on button + drawer + backdrop
-   OUTPUT: drawer slides in, backdrop fades in
-═══════════════════════════════════════════════════════════════ */
-const hamBtn   = document.querySelector('#js-ham-btn');
-const drawer   = document.querySelector('#mobile-drawer');
-const backdrop = document.querySelector('#drawer-backdrop');
-const drawerClose = document.querySelector('#js-drawer-close');
-
-function openDrawer() {
-  drawer.classList.add('is-open');
-  backdrop.classList.add('is-open');
-  hamBtn.classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-}
-function closeDrawer() {
-  drawer.classList.remove('is-open');
-  backdrop.classList.remove('is-open');
-  hamBtn.classList.remove('is-open');
-  document.body.style.overflow = '';
-}
-
-hamBtn.addEventListener('click', openDrawer);
-backdrop.addEventListener('click', closeDrawer);
-drawerClose.addEventListener('click', closeDrawer);
-
-
-/* ═══════════════════════════════════════════════════════════════
-   3. COUNTER
-   STATE: let count (mutable — must reassign)
-   INPUT:  click +, -, reset buttons
-   PROCESS: clamp value 0–10, update state
-   OUTPUT: textContent + progress bar + label
-═══════════════════════════════════════════════════════════════ */
-let count = 0;   // let: this value must mutate
-
-const countDisplay  = document.querySelector('#js-count-display');
-const countLabel    = document.querySelector('#js-count-label');
-const countPct      = document.querySelector('#js-count-pct');
-const progressBar   = document.querySelector('#js-progress-bar');
-const btnPlus       = document.querySelector('#js-btn-plus');
-const btnMinus      = document.querySelector('#js-btn-minus');
-const btnReset      = document.querySelector('#js-btn-reset');
-
-function renderCount() {
-  countDisplay.textContent = count;           // OUTPUT: safe textContent
-  const pct = (count / 10) * 100;
-  progressBar.style.width = pct + '%';
-  countPct.textContent    = pct + '%';
-
-  // Label logic
-  if (count === 0)  countLabel.textContent = '// start counting';
-  else if (count === 10) countLabel.textContent = '// max reached!';
-  else if (count > 7)    countLabel.textContent = '// getting close to max';
-  else countLabel.textContent = '';
-
-  // Colour feedback
-  if (count >= 10) progressBar.style.background = 'var(--accent)';
-  else if (count >= 7) progressBar.style.background = 'var(--amber)';
-  else progressBar.style.background = 'var(--green)';
-
-  // Bump animation — classList
-  countDisplay.classList.add('is-bump');
-  setTimeout(() => countDisplay.classList.remove('is-bump'), 150);
-}
-
-function increment() {
-  if (count < 10) { count++; renderCount(); }   // PROCESS: guard + mutate
-}
-function decrement() {
-  if (count > 0)  { count--; renderCount(); }
-}
-function reset() {
-  count = 0; renderCount();
-}
-
-btnPlus.addEventListener('click', increment);
-btnMinus.addEventListener('click', decrement);
-btnReset.addEventListener('click', reset);
-
-// Also support keyboard (ArrowUp / ArrowDown)
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowUp')   increment();
-  if (e.key === 'ArrowDown') decrement();
-});
-
-renderCount(); // initial render
-
-
-/* ═══════════════════════════════════════════════════════════════
-   4. TAB SWITCHER
-   INPUT:  click any .js-tab button
-   PROCESS: find active tab, remove is-active, add to clicked
-   OUTPUT: show correct panel
-═══════════════════════════════════════════════════════════════ */
-const tabBtns   = document.querySelectorAll('.js-tab');
-const tabPanels = document.querySelectorAll('.tab-panel');
-
-function switchTab(e) {
-  const clicked = e.currentTarget;
-  const target  = clicked.dataset.target;   // PROCESS: read data attribute
-
-  // Remove active from all
-  tabBtns.forEach(b   => b.classList.remove('is-active'));
-  tabPanels.forEach(p => p.classList.remove('is-active'));
-
-  // Add active to selected
-  clicked.classList.add('is-active');
-  document.querySelector('#' + target).classList.add('is-active');  // OUTPUT
-}
-
-tabBtns.forEach(btn => btn.addEventListener('click', switchTab));
-
-
-/* ═══════════════════════════════════════════════════════════════
-   5. TODO LIST
-   STATE: array of todo objects
-   INPUT:  click Add, checkbox, delete, clear-done
-   PROCESS: mutate array
-   OUTPUT: re-render list with createElement + appendChild
-═══════════════════════════════════════════════════════════════ */
-let todos = [
-  { id: 1, text: 'Add the viewport meta tag', done: true  },
-  { id: 2, text: 'Write mobile-first CSS',    done: true  },
-  { id: 3, text: 'Implement IPO loop',         done: false },
-  { id: 4, text: 'Build the todo list',        done: false },
-];
-let nextId = 5;
-
-const todoInput  = document.querySelector('#js-todo-input');
-const todoAddBtn = document.querySelector('#js-todo-add');
-const todoList   = document.querySelector('#js-todo-list');
-const todoClear  = document.querySelector('#js-todo-clear');
-const todoCount  = document.querySelector('#js-todo-count');
-
-function renderTodos() {
-  todoList.innerHTML = '';   // clear (safe here — no user data)
-
-  todos.forEach(todo => {
-    // createElement — the professional pattern
-    const li       = document.createElement('li');
-    li.className   = 'todo-item' + (todo.done ? ' is-done' : '');
-    li.dataset.id  = todo.id;
-
-    const check = document.createElement('div');
-    check.className = 'todo-checkbox js-todo-check';
-    if (todo.done) check.textContent = '✓';
-
-    const span = document.createElement('span');
-    span.className   = 'todo-text flex-1 text-sm';
-    span.textContent = todo.text;          // textContent: safe from XSS
-
-    const del = document.createElement('button');
-    del.className   = 'todo-delete js-todo-delete';
-    del.textContent = '×';
-    del.setAttribute('aria-label', 'Delete task');
-
-    li.appendChild(check);
-    li.appendChild(span);
-    li.appendChild(del);
-    todoList.appendChild(li);              // OUTPUT: append to DOM
-  });
-
-  const remaining = todos.filter(t => !t.done).length;
-  todoCount.textContent = `${remaining} item${remaining !== 1 ? 's' : ''} remaining`;
-}
-
-function addTodo() {
-  const text = todoInput.value.trim();
-  if (!text) return;
-  todos.push({ id: nextId++, text, done: false });  // PROCESS: mutate state
-  todoInput.value = '';
-  renderTodos();                                      // OUTPUT: re-render
-}
-
-// Event delegation — one listener on the parent
-todoList.addEventListener('click', (e) => {
-  const item = e.target.closest('.todo-item');
-  if (!item) return;
-  const id = Number(item.dataset.id);
-
-  if (e.target.classList.contains('js-todo-check') ||
-      e.target.classList.contains('todo-text')) {
-    const todo = todos.find(t => t.id === id);
-    if (todo) todo.done = !todo.done;
-    renderTodos();
-  }
-  if (e.target.classList.contains('js-todo-delete')) {
-    todos = todos.filter(t => t.id !== id);
-    renderTodos();
-  }
-});
-
-todoAddBtn.addEventListener('click', addTodo);
-todoInput.addEventListener('keydown', e => { if (e.key === 'Enter') addTodo(); });
-todoClear.addEventListener('click', () => {
-  todos = todos.filter(t => !t.done);
-  renderTodos();
-});
-
-renderTodos();
-
-
-/* ═══════════════════════════════════════════════════════════════
-   6. QUIZ — STATE MACHINE
-   STATE: currentQ, score, answered
-   INPUT:  click option or next button
-   PROCESS: evaluate answer, advance state
-   OUTPUT: highlight correct/wrong, update score, show results
-═══════════════════════════════════════════════════════════════ */
-const quizData = [
-  { q: 'Which keyword should you use by default for variable declarations?',
-    options: ['var', 'let', 'const', 'function'],
-    answer: 2, hint: 'Signals immutable binding intent.' },
-  { q: 'What does IPO stand for in the context of web interactivity?',
-    options: ['Internet Protocol Output', 'Input–Process–Output', 'Internal Page Object', 'Indexed Page Order'],
-    answer: 1, hint: 'Think about the universal law of software engineering.' },
-  { q: 'Which method safely injects text data into the DOM without XSS risk?',
-    options: ['innerHTML', 'innerText', 'textContent', 'insertAdjacentHTML'],
-    answer: 2, hint: 'It treats the value as plain text, never markup.' },
-  { q: 'What is the correct way to attach an event listener?',
-    options: ['element.onclick = fn', 'element.addEvent(fn)', 'element.addEventListener("click", fn)', 'element.on("click", fn)'],
-    answer: 2, hint: 'The modern, recommended method.' },
-  { q: 'What prefix marks a class as a JavaScript hook (not for CSS styling)?',
-    options: ['data-', 'is-', 'js-', 'fn-'],
-    answer: 2, hint: 'It signals the engineering contract between HTML and JS.' },
-];
-
-let currentQ  = 0;
-let score     = 0;
-let answered  = false;
-
-const qText      = document.querySelector('#js-quiz-question');
-const optsCont   = document.querySelector('#js-quiz-options');
-const feedback   = document.querySelector('#js-quiz-feedback');
-const nextBtn    = document.querySelector('#js-quiz-next');
-const progBar    = document.querySelector('#js-quiz-prog-bar');
-const progLabel  = document.querySelector('#js-quiz-progress');
-const scoreLive  = document.querySelector('#js-quiz-score-live');
-const hintEl     = document.querySelector('#js-quiz-hint');
-const resultsEl  = document.querySelector('#js-quiz-results');
-const finalScore = document.querySelector('#js-quiz-final-score');
-const restartBtn = document.querySelector('#js-quiz-restart');
-
-function renderQuiz() {
-  const q = quizData[currentQ];
-  answered = false;
-  feedback.classList.add('hidden');
-  nextBtn.classList.add('hidden');
-  hintEl.textContent = '';
-
-  qText.textContent   = q.q;
-  progLabel.textContent = `Question ${currentQ + 1} / ${quizData.length}`;
-  progBar.style.width   = ((currentQ) / quizData.length * 100) + '%';
-
-  optsCont.innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className   = 'quiz-option js-quiz-opt';
-    btn.textContent = opt;
-    btn.dataset.index = i;
-    optsCont.appendChild(btn);
-  });
-}
-
-optsCont.addEventListener('click', (e) => {
-  if (answered) return;
-  const btn = e.target.closest('.js-quiz-opt');
-  if (!btn) return;
-
-  answered = true;
-  const chosen  = Number(btn.dataset.index);
-  const correct = quizData[currentQ].answer;
-  const isRight = chosen === correct;
-
-  if (isRight) score++;
-  scoreLive.textContent = `Score: ${score}`;
-
-  // Visual feedback via classList (not inline styles)
-  document.querySelectorAll('.js-quiz-opt').forEach((b, i) => {
-    b.disabled = true;
-    if (i === correct) b.classList.add('is-correct');
-    else if (i === chosen && !isRight) b.classList.add('is-wrong');
-  });
-
-  feedback.textContent  = isRight ? '✅ Correct!' : `❌ Not quite. ${quizData[currentQ].hint}`;
-  feedback.style.background = isRight
-    ? 'color-mix(in srgb, var(--green) 15%, transparent)'
-    : 'color-mix(in srgb, var(--accent) 10%, transparent)';
-  feedback.style.color  = isRight ? 'var(--green)' : 'var(--accent)';
-  feedback.classList.remove('hidden');
-  nextBtn.classList.remove('hidden');
-  nextBtn.textContent = currentQ < quizData.length - 1 ? 'Next →' : 'See Results';
-  hintEl.textContent = `Hint: ${quizData[currentQ].hint}`;
-});
-
-nextBtn.addEventListener('click', () => {
-  currentQ++;
-  if (currentQ < quizData.length) {
-    renderQuiz();
-  } else {
-    // Show results
-    qText.textContent  = '';
-    optsCont.innerHTML = '';
-    feedback.classList.add('hidden');
-    nextBtn.classList.add('hidden');
-    hintEl.textContent = '';
-    progBar.style.width = '100%';
-    progLabel.textContent = 'Complete!';
-    finalScore.textContent = `You scored ${score} out of ${quizData.length}. ${score >= 4 ? '🎉 Excellent!' : score >= 3 ? '👍 Good work!' : '📚 Keep studying!'}`;
-    resultsEl.classList.remove('hidden');
-  }
-});
-
-restartBtn.addEventListener('click', () => {
-  currentQ = 0; score = 0; answered = false;
-  resultsEl.classList.add('hidden');
-  scoreLive.textContent = 'Score: 0';
-  renderQuiz();
-});
-
-renderQuiz();
-
-
-/* ═══════════════════════════════════════════════════════════════
-   7. ACCORDION
-   INPUT:  click any .js-accordion-btn
-   PROCESS: toggle is-open on parent .accordion-item
-   OUTPUT: CSS max-height transition expands/collapses body
-═══════════════════════════════════════════════════════════════ */
-document.querySelector('#js-accordion').addEventListener('click', (e) => {
-  const btn  = e.target.closest('.js-accordion-btn');
-  if (!btn) return;
-  const item = btn.closest('.accordion-item');
-  const isCurrentlyOpen = item.classList.contains('is-open');
-
-  // Close all (one-open-at-a-time behaviour)
-  document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('is-open'));
-
-  // Toggle clicked
-  if (!isCurrentlyOpen) item.classList.add('is-open');   // OUTPUT
-});
-
-
-/* ═══════════════════════════════════════════════════════════════
-   8. IMAGE GALLERY
-   INPUT:  click thumbnail (.js-thumb)
-   PROCESS: read data-src + data-caption attributes
-   OUTPUT: update src on main image, fade transition
-═══════════════════════════════════════════════════════════════ */
-const galleryMain    = document.querySelector('#gallery-main');
-const galleryImg     = document.querySelector('#js-gallery-img');
-const galleryCaption = document.querySelector('#js-gallery-caption');
-const thumbContainer = document.querySelector('#js-gallery-thumbs');
-
-// Event delegation — one listener on parent
-thumbContainer.addEventListener('click', (e) => {
-  const thumb = e.target.closest('.js-thumb');
-  if (!thumb) return;
-
-  const newSrc     = thumb.dataset.src;
-  const newCaption = thumb.dataset.caption;
-
-  // Fade out → update → fade in
-  galleryMain.classList.add('is-fading');
-  setTimeout(() => {
-    galleryImg.src          = newSrc;         // OUTPUT: attribute mutation
-    galleryCaption.textContent = newCaption;  // OUTPUT: textContent
-    galleryMain.classList.remove('is-fading');
-  }, 250);
-
-  // Update active thumb
-  document.querySelectorAll('.js-thumb').forEach(t => t.classList.remove('is-active'));
-  thumb.classList.add('is-active');
-});
-
-
-/* ═══════════════════════════════════════════════════════════════
-   9. SCROLL REVEAL — IntersectionObserver
-═══════════════════════════════════════════════════════════════ */
-const revealObserver = new IntersectionObserver(
-  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-  { threshold: 0.1 }
-);
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-</script>
 </body>
 </html>
