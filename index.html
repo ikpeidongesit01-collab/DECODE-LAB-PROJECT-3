@@ -52,7 +52,7 @@
     </nav>
 
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-1">
+      <div class="flex items-center gap-0.5">
         <span class="select-none text-lg" id="theme-icon"></span>
         <button id="js-theme-toggle" aria-label="Toggle dark mode">
           <span class="knob"></span>
@@ -73,7 +73,10 @@
 <nav id="mobile-drawer" aria-label="Mobile navigation">
   <div class="mb-6 flex items-center justify-between">
     <span class=" text-lg font-bold text-[var(--text)]">Menu</span>
-    <button id="js-drawer-close" class="flex h-9 w-9 items-center justify-center rounded-full text-xl bg-[var(--surface2)] text-[var(--text-muted)]">×</button>
+    <button id="js-drawer-close" class="flex h-9 w-9 items-center justify-center rounded-full text-xl bg-[var(--surface2)] text-[var(--text-muted)]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+    </svg>
+    </button>
   </div>
   <a href="#counter"   class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> Counter</a>
   <a href="#tabs"      class="block rounded-xl px-4 py-3 text-base font-medium text-[var(--text)]" onclick="closeDrawer()"> Tabs</a>

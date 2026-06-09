@@ -60,9 +60,10 @@
   .section-title{ font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.2; }
 
   /* ── Dark mode toggle button ──────────────────────────────────── */
+
   #js-theme-toggle {
     position: relative;
-    width: 52px; height: 28px;
+    width: 50px; height: 26px;
     background: var(--border);
     border-radius: 99px;
     border: none;
