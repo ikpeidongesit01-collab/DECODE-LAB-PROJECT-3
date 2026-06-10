@@ -95,13 +95,13 @@ function renderCount() {
   // Label logic
   if (count === 0)  countLabel.textContent = '// start counting';
   else if (count === 10) countLabel.textContent = '// max reached!';
-  else if (count > 7)    countLabel.textContent = '// getting close to max';
+  else if (count > 6)    countLabel.textContent = '// getting close to max';
   else countLabel.textContent = '';
 
   // Colour feedback
-  if (count >= 10) progressBar.style.background = 'var(--accent)';
-  else if (count >= 7) progressBar.style.background = 'var(--amber)';
-  else progressBar.style.background = 'var(--green)';
+  if (count >= 10) progressBar.style.background = 'var(--green)';
+  else if (count >= 6) progressBar.style.background = 'var(--accent2)';
+  else progressBar.style.background = 'var(--accent)';
 
   // Bump animation — classList
   countDisplay.classList.add('is-bump');
@@ -257,7 +257,7 @@ const quizData = [
     options: ['var', 'let', 'const', 'function'],
     answer: 2, hint: 'Signals immutable binding intent.' },
   { q: 'What does IPO stand for in the context of web interactivity?',
-    options: ['Internet Protocol Output', 'Input–Process–Output', 'Internal Page Object', 'Indexed Page Order'],
+    options: ['Internet Protocol Output', 'Input-Process-Output', 'Internal Page Object', 'Indexed Page Order'],
     answer: 1, hint: 'Think about the universal law of software engineering.' },
   { q: 'Which method safely injects text data into the DOM without XSS risk?',
     options: ['innerHTML', 'innerText', 'textContent', 'insertAdjacentHTML'],
@@ -327,7 +327,7 @@ optsCont.addEventListener('click', (e) => {
     else if (i === chosen && !isRight) b.classList.add('is-wrong');
   });
 
-  feedback.textContent  = isRight ? '✅ Correct!' : `❌ Not quite. ${quizData[currentQ].hint}`;
+  feedback.textContent  = isRight ? ' Correct!' : ` Not quite. ${quizData[currentQ].hint}`;
   feedback.style.background = isRight
     ? 'color-mix(in srgb, var(--green) 15%, transparent)'
     : 'color-mix(in srgb, var(--accent) 10%, transparent)';
@@ -351,7 +351,7 @@ nextBtn.addEventListener('click', () => {
     hintEl.textContent = '';
     progBar.style.width = '100%';
     progLabel.textContent = 'Complete!';
-    finalScore.textContent = `You scored ${score} out of ${quizData.length}. ${score >= 4 ? '🎉 Excellent!' : score >= 3 ? '👍 Good work!' : '📚 Keep studying!'}`;
+    finalScore.textContent = `You scored ${score} out of ${quizData.length}. ${score >= 4 ? 'Excellent!' : score >= 3 ? ' Good work!' : ' Keep studying!'}`;
     resultsEl.classList.remove('hidden');
   }
 });

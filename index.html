@@ -38,7 +38,7 @@
   <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
 
     <a href="#" class="grid grid-rows-2 md:flex items-center  text-xl font-bold text-[var(--text)]">
-      <span class="flex  h-6 w-[140px] items-center justify-center rounded-lg text-4 font-bold text-[var(--accent)]">Interactive</span>
+      <span class="flex  h-6 w-[140px] items-center justify-center rounded-lg text-4 font-bold text-[var(--green)]">Interactive</span>
         Web Element
     </a>
 
@@ -90,9 +90,9 @@
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
       <div>
-        <span class="ipo-badge ipo-process mb-5 inline-block">DecodeLab · Project 3</span>
+        <span class="ipo-badge ipo-process mb-5 inline-block">Decode Labs · Project 3</span>
         <h1 class="hero-title mb-6 font-bold text-[var(--text)]">
-          Engineering the<br/><span class="text-[var(--accent)]">Client-Side</span><br/>Nervous System
+          Engineering the<br/><span class="text-[var(--green)]">Client-Side</span><br/>Nervous System
         </h1>
         <p class="text-base leading-relaxed mb-8 text-[var(--text-muted)]">
           Every interaction on this page follows the <strong class="text-[var(--text)]">IPO loop</strong>:
@@ -110,7 +110,7 @@
         <div class="flex flex-col gap-3">
           <div class="card-inner flex items-start gap-3 p-4">
             <span class="ipo-badge ipo-input mt-0.5 shrink-0">INPUT</span>
-            <p class="text-sm" text-[var(--text)]>User clicks the theme toggle button → <code class="font-mono text-xs text-[var(--accent)]">'click'</code> event fires</p>
+            <p class="text-sm" text-[var(--text)]>User clicks the theme toggle button → <code class="font-mono text-xs text-[var(--green)]">'click'</code> event fires</p>
           </div>
           <div class="card-inner flex items-start gap-3 p-4">
             <span class="ipo-badge ipo-process mt-0.5 shrink-0">PROCESS</span>
@@ -131,7 +131,7 @@
     <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
 
       <div class="reveal">
-        <span class="ipo-badge ipo-input mb-4 inline-block">Phase 1 · Input + State</span>
+        <span class="ipo-badge ipo-process mb-4 inline-block">Phase 1 · Input + State</span>
         <h2 class="section-title font-display mb-4 font-bold text-[var(--text)]">Interactive Counter</h2>
         <p class="text-sm leading-relaxed mb-5 text-[var(--text-muted)]">
           Demonstrates: <strong class="text-[var(--text)]">state variables</strong> (<code class="font-mono text-xs">let count</code>),
@@ -139,10 +139,10 @@
           and conditional logic clamping the value.
         </p>
         <div class="card-inner p-4">
-          <pre class="font-mono text-xs leading-relaxed overflow-x-auto text-[var(--text-muted)]"><span class="text-[var(--accent2)]">let</span> <span class="text-[var(--text)]">count</span> = <span class="text-[var(--amber)]">0</span>;            <span class="text-[var(--border)]">// STATE</span>
+          <pre class=" text-xs leading-relaxed overflow-x-auto text-[var(--text-muted)]"><span class="text-[var(--accent2)]">let</span> <span class="text-[var(--text)]">count</span> = <span class="text-[var(--green)]">0</span>;            <span class="text-[var(--border)]">// STATE</span>
 
 <span class="text-[var(--text)]">btnPlus</span>.<span class="text-[var(--green)]">addEventListener</span>(<span class="text-[var(--amber)]">'click'</span>, () =&gt; {
-  count++;                 <span class="text-[var(--border)]">// PROCESS</span>
+  count++;                 <span class="text-[var(--accent2)]">// PROCESS</span>
   display.<span class="text-[var(--green)]">textContent</span> = count; <span class="text-[var(--border)]">// OUTPUT</span>
 });</pre>
         </div>
@@ -155,11 +155,11 @@
 
         <div class="flex flex-wrap justify-center gap-3">
           <button id="js-btn-minus"
-            class="h-14 w-14 active:scale-90 rounded-2xl border-2 text-2xl font-bold transition-transform bg-[var(--surface2)] border-[var(--border)] text-[var(--text)]">−</button>
+            class="h-14 w-14 active:scale-90 rounded-2xl border-2 text-2xl font-bold transition-transform bg-[var(--accent)] border-[var(--border)] text-[var(--text)]">-</button>
           <button id="js-btn-reset"
-            class="h-14 active:scale-90 rounded-2xl border-2 px-6 font-mono text-sm font-medium transition-transform bg-[var(--surface2)] border-[var(--border)] text-[var(--text-muted)]">reset</button>
+            class="h-14 active:scale-90 rounded-2xl border-2 px-6 font-mono text-sm font-medium transition-transform bg-[var(--amber)] border-[var(--border)] text-[var(--text-muted)]">reset</button>
           <button id="js-btn-plus"
-            class="h-14 w-14 active:scale-90 rounded-2xl border-2 text-2xl font-bold transition-transform text-white bg-[var(--accent)] border-[var(--accent)]">+</button>
+            class="h-14 w-14 active:scale-90 rounded-2xl border-2 text-2xl font-bold transition-transform text-white bg-[var(--green)] border-[var(--border)]">+</button>
         </div>
 
         <div class="mt-6 flex flex-wrap justify-center gap-2">
@@ -253,8 +253,11 @@ tabs.<span class="text-[var(--green)]">forEach</span>(btn =&gt; {
   list.<span class="text-[var(--green)]">appendChild</span>(li);
 }</pre>
         </div>
-        <p class="mt-4 rounded-lg font-mono text-xs p-3 bg-[color-mix(in_srgb,var(--green)_12%,transparent)] text-[var(--green)]">
-          ✅ Use textContent — never innerHTML for user input (XSS risk)
+        <p class="mt-4 flex gap-2 items-center rounded-lg font-mono text-xs p-3 bg-[color-mix(in_srgb,var(--green)_12%,transparent)] text-[var(--green)]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-green-500">
+  <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+</svg>
+ Use textContent — never innerHTML for user input (XSS risk)
         </p>
       </div>
 
@@ -263,7 +266,7 @@ tabs.<span class="text-[var(--green)]">forEach</span>(btn =&gt; {
           <input id="js-todo-input" type="text" placeholder="Add a new task..."
                  class="h-11 flex-1 rounded-xl px-4 text-sm outline-none border-[1.5px] bg-[var(--surface2)] border-[var(--border)] text-[var(--text)]"/>
           <button id="js-todo-add"
-                  class="h-11 active:scale-95 rounded-xl px-5 text-sm font-semibold text-white transition-transform bg-[var(--accent)]">Add</button>
+                  class="h-11 active:scale-95 rounded-xl px-5 text-sm font-semibold text-white transition-transform bg-[var(--green)]">Add</button>
         </div>
 
         <ul id="js-todo-list" class="flex flex-col gap-2 min-h-[60px]">
@@ -304,12 +307,18 @@ tabs.<span class="text-[var(--green)]">forEach</span>(btn =&gt; {
       <div class="flex items-center justify-between">
         <span id="js-quiz-hint" class="text-xs text-[var(--text-muted)]"></span>
         <button id="js-quiz-next"
-                class="active:scale-95 rounded-xl px-6 py-2.5 text-sm font-semibold text-white hidden transition-transform bg-[var(--accent2)]">Next →</button>
+                class="active:scale-95 rounded-xl px-6 py-2.5 text-sm font-semibold text-white hidden transition-transform bg-[var(--accent2)] flex items-center gap-1">Next <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                  <path fill-rule="evenodd" d="M16.72 7.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06l2.47-2.47H3a.75.75 0 0 1 0-1.5h16.19l-2.47-2.47a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                </svg>
+                </button>
       </div>
 
-      <div id="js-quiz-results" class="hidden py-6 text-center">
-        <div class="mb-4 text-5xl">🎯</div>
-        <h3 class="font-display mb-2 text-2xl font-bold text-[var(--text)]">Quiz Complete!</h3>
+      <div id="js-quiz-results" class="hidden py-6 text-center items-center">
+        <div class="mb-4 text-5xl px-80"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-green-700">
+  <path d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z" />
+</svg>
+</div>
+        <h3 class="mb-2 text-2xl font-bold text-[var(--text)]">Quiz Complete!</h3>
         <p id="js-quiz-final-score" class="text-lg mb-6 text-[var(--text-muted)]"></p>
         <button id="js-quiz-restart"
                 class="rounded-xl px-8 py-3 font-semibold text-white bg-[var(--accent)]">Restart Quiz</button>
@@ -321,7 +330,7 @@ tabs.<span class="text-[var(--green)]">forEach</span>(btn =&gt; {
 <section id="accordion" class="py-16 md:py-20 bg-[var(--surface)]">
   <div class="mx-auto max-w-3xl px-4 sm:px-6">
     <div class="reveal mb-10 text-center">
-      <span class="ipo-badge ipo-input mb-4 inline-block">classList.toggle · is- prefix</span>
+      <span class="ipo-badge ipo-output mb-4 inline-block">classList.toggle · is- prefix</span>
       <h2 class="section-title font-bold text-[var(--text)]">FAQ Accordion</h2>
       <p class="text-sm mt-2 text-[var(--text-muted)]">JS toggles <code class="font-mono text-xs">is-open</code>. CSS animates max-height. Professional decoupling.</p>
     </div>
